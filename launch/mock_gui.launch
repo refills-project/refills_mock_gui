@@ -1,0 +1,4 @@
+<launch>
+  <rosparam param="/mock_gui/loc_ids">[aisle_0, shelf_system_0, shelf_system_1, shelf_system_2, shelf_system_3]</rosparam>
+  <node pkg="refills_mock_gui" type="mock_gui.py" name="mock_gui" />
+</launch>
