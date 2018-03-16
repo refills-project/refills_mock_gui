@@ -15,5 +15,6 @@
   <buildtool_depend>catkin</buildtool_depend>
   <depend>refills_msgs</depend>
   <depend>rospy</depend>
+  <depend>actionlib</depend>
 
 </package>
