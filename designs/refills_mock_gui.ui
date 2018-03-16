@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>REFILLS Mock SMS</string>
+   <string>REFILLS Mock GUI</string>
   </property>
   <property name="windowIcon">
    <iconset>

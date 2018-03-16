@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "REFILLS Mock SMS", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "REFILLS Mock GUI", None))
         self.execButton.setText(_translate("MainWindow", "Scan", None))
         self.cancelButton.setText(_translate("MainWindow", "Cancel", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
