@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>refills_mock_gui</name>
+  <version>0.0.0</version>
+  <description>The refills_mock_gui package</description>
+
+  <maintainer email="georg.bartels@cs.uni-bremen.de">Georg Bartels</maintainer>
+  <author email="georg.bartels@cs.uni-bremen.de">Georg Bartels</author>
+
+  <license>LGPLv3</license>
+
+  <url type="repository">https://github.com/refills-project/refills_mock_gui</url>
+  <url type="bugtracker">https://github.com/refills-project/refills_mock_gui/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>refills_msgs</depend>
+  <depend>rospy</depend>
+
+</package>
