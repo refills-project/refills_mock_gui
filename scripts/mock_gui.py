@@ -75,13 +75,16 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
         self.execButton.setEnabled(True)
 
     def cancel(self):
-        self.statusbar.showMessage("Canceled.")
         self.action_thread.cancel_request.emit()
 
     def result(self, msg):
         if msg is actionlib.GoalStatus.SUCCEEDED:
            self.statusbar.showMessage("Success.")
            self.progressBar.setValue(100)
+        elif msg is actionlib.GoalStatus.ABORTED:
+            self.statusbar.showMessage("Aborted: {}".format(msg.error_string))
+        elif msg is actionlib.GoalStatus.PREEMPTED:
+            self.statusbar.showMessage("Canceled.")
 
 
 if __name__ == "__main__":
