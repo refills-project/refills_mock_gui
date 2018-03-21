@@ -8,9 +8,11 @@ import actionlib
 import refills_msgs.msg
 
 
-class MockSmsMainWindow(Ui_MainWindow):
+class MockGui(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self):
-        super(MockSmsMainWindow, self).__init__()
+        super(self.__class__, self).__init__()
+        self.setupUi(self)
+
         self.target_locs = []
         self.client = None
 
@@ -49,10 +51,8 @@ class MockSmsMainWindow(Ui_MainWindow):
 if __name__ == "__main__":
     rospy.init_node("mock_sms")
     app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
-    ui = MockSmsMainWindow()
-    ui.setupUi(MainWindow)
+    ui = MockGui()
     ui.ros_setup()
-    MainWindow.show()
+    ui.show()
     sys.exit(app.exec_())
 
