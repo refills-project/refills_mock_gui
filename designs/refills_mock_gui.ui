@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>296</width>
-    <height>472</height>
+    <width>279</width>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,8 +20,12 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
-     <widget class="QListWidget" name="listWidget"/>
+    <item row="2" column="0" colspan="2">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="execButton">
@@ -32,16 +36,21 @@
     </item>
     <item row="1" column="1">
      <widget class="QPushButton" name="cancelButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Cancel</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QProgressBar" name="progressBar">
-      <property name="value">
-       <number>24</number>
-      </property>
+    <item row="0" column="0" colspan="2">
+     <widget class="QTreeWidget" name="treeWidget">
+      <column>
+       <property name="text">
+        <string>Location IDs</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
@@ -51,7 +60,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>296</width>
+     <width>279</width>
      <height>25</height>
     </rect>
    </property>
