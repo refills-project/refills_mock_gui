@@ -57,14 +57,14 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
     def ros_setup(self):
         self.client = actionlib.SimpleActionClient('/scanning_action', refills_msgs.msg.ScanningAction)
         if not self.client.wait_for_server(rospy.Duration(0.5)):
-            rospy.loginfo("Waiting for action server at '/scanning_action' to appear. Please make sure it is up.")
+            rospy.logwarn("Waiting for action server at '/scanning_action' to appear. Please make sure it is up.")
         self.client.wait_for_server()
 
         self.prolog = json_prolog.Prolog()
         try:
             self.prolog.wait_for_service(0.5)
         except rospy.ROSException:
-            rospy.loginfo("Waiting for json_prolog server at default namespace to appear. Please make sure it is up.")
+            rospy.logwarn("Waiting for json_prolog server at default namespace to appear. Please make sure it is up.")
         self.prolog.wait_for_service()
 
     def start(self):

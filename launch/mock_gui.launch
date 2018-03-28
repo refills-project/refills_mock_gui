@@ -1,3 +1,0 @@
-<launch>
-  <node pkg="refills_mock_gui" type="mock_gui.py" name="mock_gui" />
-</launch>

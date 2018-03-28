@@ -17,5 +17,6 @@
   <depend>rospy</depend>
   <depend>actionlib</depend>
   <depend>json_prolog</depend>
+  <depend>knowrob_refills</depend>
 
 </package>
