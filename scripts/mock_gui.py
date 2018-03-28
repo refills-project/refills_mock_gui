@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from PyQt4 import QtGui
-from PyQt4.QtCore import QThread, pyqtSignal
+from PyQt4.QtCore import QThread, pyqtSignal, Qt
 from json_prolog import json_prolog
 
 from refills_mock_gui.layout import Ui_MainWindow
@@ -46,6 +46,7 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
 
         self.execButton.clicked.connect(self.start)
         self.cancelButton.clicked.connect(self.cancel)
+        self.syncButton.clicked.connect(self.sync_with_knowrob)
         self.progressBar.setValue(0)
 
         self.client = None
@@ -66,20 +67,6 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
             rospy.loginfo("Waiting for json_prolog server at default namespace to appear. Please make sure it is up.")
         self.prolog.wait_for_service()
 
-
-
-        # loc_ids = rospy.get_param("/mock_gui/loc_ids")
-        # print loc_ids
-        # for shelf_system in loc_ids:
-        #     parent = QtGui.QTreeWidgetItem(self.treeWidget)
-        #     parent.setText(0, shelf_system)
-        #     parent.setFlags(parent.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
-        #     for shelf_meter in loc_ids[shelf_system]:
-        #         child = QtGui.QTreeWidgetItem(parent)
-        #         child.setFlags(child.flags() | Qt.ItemIsUserCheckable)
-        #         child.setText(0, shelf_meter)
-        #         child.setCheckState(0, Qt.Unchecked)
-
     def start(self):
         self.action_thread = ActionThread(self.client, self.read_target_locs())
         self.action_thread.feedback.connect(self.feedback)
@@ -89,13 +76,33 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
         self.cancelButton.setEnabled(True)
         self.execButton.setEnabled(False)
 
+    def sync_with_knowrob(self):
+        self.treeWidget.clear()
+        query_string = "findall(A, owl_individual_of(A, dmshop:'DMShelfSystem'), ShelfSystems)."
+        systems = self.prolog.once(query_string)['ShelfSystems']
+        for system in systems:
+            parent = QtGui.QTreeWidgetItem(self.treeWidget)
+            parent.setText(0, system)
+            parent.setFlags(parent.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+            query_string = "findall(A, owl_has('{}', knowrob:'properPhysicalParts', A), ShelfMeters).".format(system)
+            meters = self.prolog.once(query_string)['ShelfMeters']
+            for meter in meters:
+                child = QtGui.QTreeWidgetItem(parent)
+                child.setFlags(child.flags() | Qt.ItemIsUserCheckable)
+                child.setText(0, meter)
+                child.setCheckState(0, Qt.Unchecked)
+        if self.treeWidget.topLevelItemCount() > 0:
+            self.execButton.setEnabled(True)
+        else:
+            self.execButton.setEnabled(False)
+
     def read_target_locs(self):
         target_locs = []
         iterator = QtGui.QTreeWidgetItemIterator(self.treeWidget, QtGui.QTreeWidgetItemIterator.Checked)
         while iterator.value():
             item = iterator.value()
             # TODO: smarter filtering of unwanted loc ids
-            if not 'shelf_system' in item.text(0):
+            if not 'ShelfSystem' in item.text(0):
                 target_locs.append(str(item.text(0)))
             iterator += 1
         return target_locs
