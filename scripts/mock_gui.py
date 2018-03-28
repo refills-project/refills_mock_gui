@@ -44,7 +44,6 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
         super(self.__class__, self).__init__()
         self.setupUi(self)
 
-        #self.listWidget.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.execButton.clicked.connect(self.start)
         self.cancelButton.clicked.connect(self.cancel)
         self.progressBar.setValue(0)
@@ -55,8 +54,10 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
 
     def ros_setup(self):
         self.client = actionlib.SimpleActionClient('/scanning_action', refills_msgs.msg.ScanningAction)
-        if not self.client.wait_for_server(rospy.Duration(1)):
-            raise RuntimeError("Could not connect to action server of '/scanning_action'.")
+        if not self.client.wait_for_server(rospy.Duration(0.5)):
+            rospy.loginfo("Waiting for action server at '/scanning_action' to appear. Please make sure it is up.")
+        self.client.wait_for_server()
+
 
         # loc_ids = rospy.get_param("/mock_gui/loc_ids")
         # print loc_ids
