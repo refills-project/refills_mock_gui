@@ -2,7 +2,7 @@
 
 from PyQt4 import QtGui
 from PyQt4.QtCore import QThread, pyqtSignal
-from PyQt4.QtCore import Qt
+from json_prolog import json_prolog
 
 from refills_mock_gui.layout import Ui_MainWindow
 import sys
@@ -50,6 +50,7 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
 
         self.client = None
         self.action_thread = None
+        self.prolog = None
         self.ros_setup()
 
     def ros_setup(self):
@@ -57,6 +58,14 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
         if not self.client.wait_for_server(rospy.Duration(0.5)):
             rospy.loginfo("Waiting for action server at '/scanning_action' to appear. Please make sure it is up.")
         self.client.wait_for_server()
+
+        self.prolog = json_prolog.Prolog()
+        try:
+            self.prolog.wait_for_service(0.5)
+        except rospy.ROSException:
+            rospy.loginfo("Waiting for json_prolog server at default namespace to appear. Please make sure it is up.")
+        self.prolog.wait_for_service()
+
 
 
         # loc_ids = rospy.get_param("/mock_gui/loc_ids")

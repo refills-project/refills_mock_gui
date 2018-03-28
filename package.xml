@@ -16,5 +16,6 @@
   <depend>refills_msgs</depend>
   <depend>rospy</depend>
   <depend>actionlib</depend>
+  <depend>json_prolog</depend>
 
 </package>
