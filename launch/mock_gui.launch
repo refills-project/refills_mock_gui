@@ -1,5 +1,3 @@
 <launch>
-  <node pkg="refills_mock_gui" type="mock_gui.py" name="mock_gui" >
-    <rosparam command="load" file="$(find refills_mock_gui)/resources/test_loc_ids.yaml" />
-  </node>
+  <node pkg="refills_mock_gui" type="mock_gui.py" name="mock_gui" />
 </launch>

@@ -58,17 +58,17 @@ class MockGui(QtGui.QMainWindow, Ui_MainWindow):
         if not self.client.wait_for_server(rospy.Duration(1)):
             raise RuntimeError("Could not connect to action server of '/scanning_action'.")
 
-        loc_ids = rospy.get_param("/mock_gui/loc_ids")
-        print loc_ids
-        for shelf_system in loc_ids:
-            parent = QtGui.QTreeWidgetItem(self.treeWidget)
-            parent.setText(0, shelf_system)
-            parent.setFlags(parent.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
-            for shelf_meter in loc_ids[shelf_system]:
-                child = QtGui.QTreeWidgetItem(parent)
-                child.setFlags(child.flags() | Qt.ItemIsUserCheckable)
-                child.setText(0, shelf_meter)
-                child.setCheckState(0, Qt.Unchecked)
+        # loc_ids = rospy.get_param("/mock_gui/loc_ids")
+        # print loc_ids
+        # for shelf_system in loc_ids:
+        #     parent = QtGui.QTreeWidgetItem(self.treeWidget)
+        #     parent.setText(0, shelf_system)
+        #     parent.setFlags(parent.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+        #     for shelf_meter in loc_ids[shelf_system]:
+        #         child = QtGui.QTreeWidgetItem(parent)
+        #         child.setFlags(child.flags() | Qt.ItemIsUserCheckable)
+        #         child.setText(0, shelf_meter)
+        #         child.setCheckState(0, Qt.Unchecked)
 
     def start(self):
         self.action_thread = ActionThread(self.client, self.read_target_locs())
